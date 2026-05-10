@@ -6,21 +6,23 @@ from hummingbot.core.web_assistant.auth import AuthBase
 from hummingbot.core.web_assistant.web_assistants_factory import WebAssistantsFactory
 
 
-def public_rest_url(path_url: str) -> str:
+def public_rest_url(path_url: str, domain: str = "ir") -> str:
     """
     Creates a full URL for provided public REST endpoint
     :param path_url: a public REST endpoint
     :return: the full URL to the endpoint
     """
+    _ = domain
     return CONSTANTS.REST_URL + path_url
 
 
-def private_rest_url(path_url: str) -> str:
+def private_rest_url(path_url: str, domain: str = "ir") -> str:
     """
     Creates a full URL for provided private REST endpoint
     :param path_url: a private REST endpoint
     :return: the full URL to the endpoint
     """
+    _ = domain
     return CONSTANTS.REST_URL + path_url
 
 
