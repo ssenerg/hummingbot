@@ -3,6 +3,7 @@ from hummingbot.core.data_type.in_flight_order import OrderState
 
 REST_URL = "https://apiv2.nobitex.ir"
 WSS_URL = "wss://ws.nobitex.ir/connection/websocket"
+WS_HEARTBEAT_TIME_INTERVAL = 25
 
 HBOT_ORDER_ID_PREFIX = "x-HUM"
 MAX_ORDER_ID_LEN = 32
@@ -13,6 +14,10 @@ ORDER_UPDATE_PATH_URL = "/market/orders/update-status"
 ORDER_STATUS_PATH_URL = "/market/orders/status"
 ACCOUNTS_PATH_URL = "/users/wallets/list"
 SERVER_OPTIONS_PATH = "/v2/options"
+ORDER_BOOK_PATH = "/v3/orderbook/"
+TRADE_PATH = "/v2/trades/"
+ORDER_LIST_PATH = "/market/orders/list"
+MY_TRADES_PATH_URL = "/market/trades/list"
 
 SIDE_BUY = "buy"
 SIDE_SELL = "sell"
@@ -33,6 +38,10 @@ RATE_LIMITS = [
     RateLimit(limit_id=ORDER_UPDATE_PATH_URL, limit=90, time_interval=ONE_MINUTE),
     RateLimit(limit_id=ACCOUNTS_PATH_URL, limit=20, time_interval=2 * ONE_MINUTE),
     RateLimit(limit_id=SERVER_OPTIONS_PATH, limit=300, time_interval=ONE_MINUTE),
+    RateLimit(limit_id=ORDER_BOOK_PATH, limit=300, time_interval=60),
+    RateLimit(limit_id=TRADE_PATH, limit=60, time_interval=60),
+    RateLimit(limit_id=ORDER_LIST_PATH, limit=30, time_interval=60),
+    RateLimit(limit_id=MY_TRADES_PATH_URL, limit=30, time_interval=60),
 ]
 
 

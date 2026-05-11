@@ -65,10 +65,10 @@ class NobitexAPIOrderBookDataSource(OrderBookTrackerDataSource):
 
         rest_assistant = await self._api_factory.get_rest_assistant()
         data = await rest_assistant.execute_request(
-            url=web_utils.public_rest_url(path_url=CONSTANTS.SNAPSHOT_PATH_URL + symbol, domain=self._domain),
+            url=web_utils.public_rest_url(path_url=CONSTANTS.ORDER_BOOK_PATH + symbol, domain=self._domain),
             params=None,
             method=RESTMethod.GET,
-            throttler_limit_id=CONSTANTS.SNAPSHOT_PATH_URL,
+            throttler_limit_id=CONSTANTS.ORDER_BOOK_PATH,
         )
 
         return data
@@ -85,10 +85,10 @@ class NobitexAPIOrderBookDataSource(OrderBookTrackerDataSource):
 
         rest_assistant = await self._api_factory.get_rest_assistant()
         data = await rest_assistant.execute_request(
-            url=web_utils.public_rest_url(path_url=CONSTANTS.TRADE_PATH_URL + symbol, domain=self._domain),
+            url=web_utils.public_rest_url(path_url=CONSTANTS.TRADE_PATH + symbol, domain=self._domain),
             params=None,
             method=RESTMethod.GET,
-            throttler_limit_id=CONSTANTS.TRADE_PATH_URL,
+            throttler_limit_id=CONSTANTS.TRADE_PATH,
         )
 
         if data["status"] == "ok":
@@ -156,7 +156,7 @@ class NobitexAPIOrderBookDataSource(OrderBookTrackerDataSource):
     # TODO: First check done
     async def _connected_websocket_assistant(self) -> WSAssistant:
         ws: WSAssistant = await self._api_factory.get_ws_assistant()
-        await ws.connect(ws_url=CONSTANTS.WSS_URL[self._domain], ping_timeout=CONSTANTS.WS_HEARTBEAT_TIME_INTERVAL)
+        await ws.connect(ws_url=CONSTANTS.WSS_URL, ping_timeout=CONSTANTS.WS_HEARTBEAT_TIME_INTERVAL)
 
         # send connect request after connecting to the websocket based on Nobitex documentation
         payload = {"connect": {}, "id": 1}

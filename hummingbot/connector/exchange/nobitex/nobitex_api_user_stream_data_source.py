@@ -82,7 +82,7 @@ class NobitexAPIUserStreamDataSource(UserStreamTrackerDataSource):
         while has_next:
             params["page"] = page
             response = await self._connector._api_get(
-                path_url=CONSTANTS.PRIVATE_ORDERS_PATH, is_auth_required=True, params=params
+                path_url=CONSTANTS.ORDER_LIST_PATH, is_auth_required=True, params=params
             )
             if response is not None and response.get("status") == "ok":
 
@@ -223,7 +223,7 @@ class NobitexAPIUserStreamDataSource(UserStreamTrackerDataSource):
                     "order_average_price": order_average_price,
                     "order_matched_amount": order_matched_amount,
                     "created_at": created_at,
-                    "event_type": CONSTANTS.EVENT_TYPE_ORDER_CHANGE,
+                    "event_type": "order_change",
                 }
 
                 trades = self.filter_trades_by_order_id(all_trades, _order)
