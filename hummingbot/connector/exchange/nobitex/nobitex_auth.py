@@ -41,7 +41,7 @@ class NobitexAuth(AuthBase):
         now = int(time())
         return {
             "Nobitex-Key": self.api_key,
-            "Nobitex-Timestamp": now,
+            "Nobitex-Timestamp": str(now),
             "Nobitex-Signature": self._generate_signature(now, request)
         }
 
