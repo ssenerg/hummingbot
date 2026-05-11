@@ -506,9 +506,9 @@ class NobitexExchange(ExchangePyBase):
             for trade in all_fills_response:
 
                 if order.trade_type == TradeType.BUY:
-                    commission_asset = self._naming_dictionary.get(trade["srcCurrency"])
+                    commission_asset = self._convert_trading_pair_naming_mapping(trade["srcCurrency"])
                 else:
-                    commission_asset = self._naming_dictionary.get(trade["dstCurrency"])
+                    commission_asset = self._convert_trading_pair_naming_mapping(trade["dstCurrency"])
 
                 commission_amount = Decimal(trade["fee"])
 
@@ -516,7 +516,7 @@ class NobitexExchange(ExchangePyBase):
                     commission_asset = "IRT"
                     commission_amount = commission_amount / 10
 
-                quote = self._naming_dictionary.get(trade["dstCurrency"])
+                quote = self._convert_trading_pair_naming_mapping(trade["dstCurrency"])
 
                 if quote == "RLS":
                     quote = "IRT"
@@ -625,3 +625,6 @@ class NobitexExchange(ExchangePyBase):
             mapping[combine_to_hb_trading_pair(base=base, quote=quote)] = combine_to_hb_trading_pair(base=base, quote=quote)
 
         self._set_trading_pair_symbol_map(mapping)
+
+    def _convert_trading_pair_naming_mapping(self, std_name: str) -> str:
+        return self._naming_dictionary.get(std_name)
